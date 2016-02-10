@@ -3,7 +3,9 @@ package hippo;
 import java.io.IOException;
 import java.util.Arrays;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
+import javafx.print.Collation;
 
 public class Hippo {
 
@@ -21,23 +23,23 @@ public class Hippo {
             //filling array
             for (int q = 0; q < n; q++) {hippos[q] = input.nextInt();}
             //sorting array
-           Arrays.parallelSort(hippos);
-           //counting 
-            for (int w = 0; w < hippos.length; w++) {
-                for (int j = 0; j < hippos.length; j++) {
-                    int t1 = hippos[w], t2 = hippos[j];
-                    if (t1 + t2 < dh && w != j && t1 != -1 && t2 != -1) {
+            Arrays.sort(hippos);
+//counting 
+            for (int w = hippos.length - 1; w > -1 && hippos[w]!=-1; w--) {
+                int j = w-1;
+                for (; j > -1&& hippos[j]!=-1; j--) {
+                    int t1 = hippos[w], t2 =hippos[j];
+                    if (t1 + t2 < dh) {
                         hippos[w] = -1;
                         hippos[j] = -1;
                         dhippo++;
-
+                        break;
                     }
                 }
-            }
-            for (int e = 0; e < hippos.length; e++) {
-                if (hippos[e] != -1)
+                if(j<0){
                     shippo++;
-
+                hippos[w]=-1;
+                }
             }
             System.out.println("Case " + i + ": " + (dhippo * td + shippo * ta));
 
